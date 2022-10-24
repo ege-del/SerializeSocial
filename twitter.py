@@ -243,12 +243,14 @@ def serializeTweet(h_element):
 
 	return tweet
 
+
+#return json.dumps(iterate_tweets(tweet_elements),indent=4,ensure_ascii=False).encode('utf-8')
 def get_tweets(html_string):
 	tweet_elements = html.fromstring(html_string).xpath(tweet_dom_array)
-	return json.dumps(iterate_tweets(tweet_elements),indent=4,ensure_ascii=False).encode('utf-8')
+	return iterate_tweets(tweet_elements)
 
 def get_bio(html_string):
-	return serializeBio(html.fromstring(html_string))
+	return serializeBio(html.fromstring(html_string)
 
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
