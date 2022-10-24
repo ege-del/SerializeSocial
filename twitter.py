@@ -116,7 +116,7 @@ def serializeBio(page_element):
 	bio["following_count"] = serializeNumber(page_element.xpath(bio_following_count)[0].text_content())
 	bio["follower_count"] = serializeNumber(page_element.xpath(bio_follower_count)[0].text_content())
 
-	print(bio)
+	return bio
 
 def serializeTweet(h_element):
 	tweet = {}
@@ -243,8 +243,13 @@ def serializeTweet(h_element):
 
 	return tweet
 
+def get_tweets(html_string):
+	tweet_elements = html.fromstring(html_string).xpath(tweet_dom_array)
+	return json.dumps(iterate_tweets(tweet_elements),indent=4,ensure_ascii=False).encode('utf-8')
 
-	
+def get_bio(html_string):
+	return serializeBio(html.fromstring(html_string))
+
 if __name__ == "__main__":
 	if len(sys.argv) != 3:
 		raise Exception("err input")
@@ -258,8 +263,6 @@ if __name__ == "__main__":
 		f = open(sys.argv[2],"r",encoding="utf-8").read()
 		tree = html.fromstring(f).xpath(tweet_dom_array)
 		open("out.json","wb").write(json.dumps(iterate_tweets(tree),indent=4,ensure_ascii=False).encode('utf-8'))
-
-		serializeBio(html.fromstring(f))
 	else:
 		raise Exception("err input")
 
