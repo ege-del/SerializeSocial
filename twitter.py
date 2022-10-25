@@ -19,7 +19,7 @@ bio_follower_count = "/html/body/div[1]/div/div/div[2]/main/div/div/div/div/div/
 tweet_dom_array = "//article[@data-testid='tweet']"
 
 tweet_link = "./div/div/div/div[2]/div[2]/div[1]/div/div/div[1]/div/div/div[2]/div/div[3]/a"
-tweet_link_2 = "/html/head/link[20]"
+tweet_link_2 = "/html/head/link[22]"
 
 
 user_id = "./div/div/div/div[2]/div[2]/div[1]/div/div/div[1]/div/div/div[2]/div/div[1]/a/div/span"
@@ -57,8 +57,9 @@ replying_to_banner_2 = "./div/div/div/div[2]/div[2]/div[2]/div[1]"
 
 video_blob = "./div/div/div/div[2]/div[2]/div[2]/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/video"
 video_blob_2 = "./div/div/div/div[3]/div[3]/div/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/video"
-"./div/div/div/div[2]/div[2]/div[2]/div[2]/div/div/div/div/div/div/div[2]/div/div/div/div[2]/div/div[1]/div/video"
-image_links = "./div/div/div/div[2]/div[2]/div[2]/div[2]/div//img"
+image_links = "./div/div/div/div[3]/div[3]//img"
+#"./div/div/div/div[2]/div[2]/div[2]/div[2]/div//img"
+
 featured_link = "./div/div/div/div[2]/div[2]/div[2]/div[2]/div/div[1]/a"
 
 
@@ -128,7 +129,10 @@ def serializeTweet(h_element):
 
 	if len(h_element.xpath(tweet_link)) == 0:
 		if len(h_element.xpath(is_main_tweet_check)) > 0 and tweet["user_name"] in  h_element.xpath(is_main_tweet_check)[0].text_content():
-			tweet["tweet_link"] = h_element.xpath(tweet_link_2)[0].attrib["href"]
+			if h_element.xpath(tweet_link_2)[0].attrib["data-rh"] == "true":
+				tweet["tweet_link"] = h_element.xpath(tweet_link_2)[0].attrib["href"]
+			else:
+				tweet["tweet_link"] = "error [-1]"	
 		else:
 			tweet["tweet_link"] = "error [2]"
 	else:
@@ -146,11 +150,14 @@ def serializeTweet(h_element):
 	if found_element != "error":
 		buf_str = ""
 		for i in found_element:
-			for z in i:
-				if z.tag == "span":
-					buf_str += z.text_content()
-				if z.tag == "img":
-					buf_str += z.attrib['alt']
+			print(i)
+			z = i
+			if z.tag == "span" or z.tag == "div" or z.tag == "a":
+				print(z.tag)
+				print(z.text_content())
+				buf_str += z.text_content()
+			if z.tag == "img":
+				buf_str += z.attrib['alt']
 		tweet["text"] = buf_str
 
 	res = text_content_macro(h_element,[reply_count,reply_count_2])
