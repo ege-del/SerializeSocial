@@ -1,4 +1,4 @@
-# SerializeThis
+# SerializeThis - read data without API
 
 cli
 
