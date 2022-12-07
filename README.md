@@ -5,7 +5,7 @@
 simple infobox
 > python wiki_info_box.py https://en.wikipedia.org/wiki/Leonardo_da_Vinci
 
-complex info box features with header nesting test
+complex infobox features with header nesting test
 > python wiki_info_box.py https://en.wikipedia.org/wiki/Franklin_D._Roosevelt
 > python wiki_info_box.py https://en.wikipedia.org/wiki/Adolf_Hitler
 
