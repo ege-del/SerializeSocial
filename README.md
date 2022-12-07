@@ -1,11 +1,11 @@
-# SerializeThis - read data without API
+# SerializeThis - read data without APIs
 
 ## Wikipedia
 
 simple infobox
 > python wiki_info_box.py https://en.wikipedia.org/wiki/Leonardo_da_Vinci
 
-complex infobox features with header nesting test
+complex infobox features with header nesting
 > python wiki_info_box.py https://en.wikipedia.org/wiki/Franklin_D._Roosevelt
 
 > python wiki_info_box.py https://en.wikipedia.org/wiki/Adolf_Hitler
